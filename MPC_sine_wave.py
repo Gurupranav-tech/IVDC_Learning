@@ -23,7 +23,7 @@ def main():
     original_fig.plot(xs, ys)
 
     target_fig.set_title("MPC Road")
-    target_fig.plot(xs, pys)
+    target_fig.plot(xs, pys, color='orange')
 
     plt.show()
 

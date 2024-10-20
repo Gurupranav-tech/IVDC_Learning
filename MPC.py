@@ -1,5 +1,5 @@
 from scipy.optimize import minimize
-
+from tqdm import tqdm
 
 class MPC:
     def __init__(self, A, B, horizon, desired_trajectory, initial_state):
@@ -37,6 +37,7 @@ class MPC:
             self.cost,
             control_inputs,
             args=(state, desired_trajectory),
+            bounds=[(-1, 1)] * self.horizon
         )
         self.time_step += 1
         if self.time_step >= len(self.desired_trajectory) - self.horizon:
@@ -49,7 +50,7 @@ class MPC:
             self.states.append(state)
 
     def complete(self):
-        for i in range(len(self.desired_trajectory) - self.horizon):
+        for i in tqdm(range(len(self.desired_trajectory) - self.horizon)):
             self.solution()
 
         return self.states
